@@ -17,7 +17,9 @@ def obtain_f1_and_em(a,b):
         return 0.0, 0
 
     em = 1 if a == b else 0
-    k = len(a_words) * len(b_words)
+
+    predict_word_num = len(a_words)
+    golden_word_num = len(b_words)
 
     intersecting_words = []
     for word in a_words.copy():
@@ -26,7 +28,10 @@ def obtain_f1_and_em(a,b):
             b_words.remove(word)
             intersecting_words.append(word)
 
-    f1_score = (len(intersecting_words) * len(intersecting_words)) / float(k)
+    p_value = len(intersecting_words) / float(predict_word_num)
+    r_value = len(intersecting_words) / float(golden_word_num)
+    f1_score = 2 * p_value * r_value / (p_value + r_value)
+
     return f1_score, em
 
 
